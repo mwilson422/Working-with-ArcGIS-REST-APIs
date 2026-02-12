@@ -1,3 +1,5 @@
+# This script will fetch ArcGIS REST data with a spatial filter as opposed to a filter by attribute
+
 import json
 import time
 import requests
@@ -24,6 +26,8 @@ def get_features_by_polygon(service_url, polygon_file, spatial_relation='interse
     print("🗺️  ARCGIS SPATIAL FILTER QUERY")
     print("=" * 70)
     
+
+
     # === 1. LOAD THE BOUNDARY POLYGON ===
     print(f"\n📍 Loading boundary polygon from: {polygon_file}")
     
@@ -57,6 +61,7 @@ def get_features_by_polygon(service_url, polygon_file, spatial_relation='interse
         print(f"   ❌ Error loading boundary polygon: {e}")
         return None
     
+
     # === 2. BUILD THE SPATIAL QUERY ===
     print("\n🔍 Building spatial query...")
     print(f"   Service: {service_url}")
@@ -76,6 +81,7 @@ def get_features_by_polygon(service_url, polygon_file, spatial_relation='interse
         'f': 'geojson'          # Output format
     }
     
+
     # === 3. CHECK IF PAGINATION IS NEEDED ===
     print("\n📊 Checking how many features match...")
     
@@ -98,6 +104,7 @@ def get_features_by_polygon(service_url, polygon_file, spatial_relation='interse
         print(f"   ⚠️  Could not get count: {e}")
         total_count = None
     
+
     # === 4. FETCH THE DATA (with pagination if needed) ===
     print("\n📥 Fetching features...")
     
@@ -152,6 +159,7 @@ def get_features_by_polygon(service_url, polygon_file, spatial_relation='interse
             print(f"   ❌ Error fetching data: {e}")
             break
     
+
     # === 5. SAVE THE RESULTS ===
     if all_features:
         print(f"\n💾 Saving {len(all_features)} features to {output_file}")
@@ -230,6 +238,7 @@ def quick_spatial_query(service_url, polygon_file, output_file='output.geojson')
     print(f"Saved to: {output_file}")
     
     return geojson
+
 
 
 # === USAGE ===

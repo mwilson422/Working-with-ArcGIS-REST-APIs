@@ -166,7 +166,7 @@ def save_geojson(geojson_data, filename):
 
 
 
-# Main execution
+# === USAGE ===
 if __name__ == "__main__":
 
     # ========== User Set Parameters ==========
