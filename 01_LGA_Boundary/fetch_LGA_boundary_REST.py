@@ -1,8 +1,10 @@
+# This script is for getting a .geoJSON of an LGA boundary from the Spatial Services Spatial collaboration Portal API
+# NSW Administrative Boundaries Theme - Local Government Area
+
 import requests # third party library that must be installed
 import json # built-in library
 
-# This script is for getting a .geoJSON of an LGA boundary from the Spatial Services Spatial collaboration Portal API
-# NSW Administrative Boundaries Theme - Local Government Area
+
 
 
 
@@ -20,15 +22,13 @@ OUTFILE_NAME = 'MidWesternRegional_LGA.geojson'
 
 
 
-
-
 # === Fetch Data ===
 
-# Becasue I know this script is only going to get one feature I do not need to worry agbout paginating data.
-print(f"Fetching data from ArcGIS REST API...")
+# I know this script is only going to get one feature I do not need to paginate data.
+print("Fetching data from ArcGIS REST API...")
 print(f"Filter: {WHERE_CLAUSE}")
 
-# Define the rest of the parameters (maybe could make these part of User settings)
+# Define the parameters 
 params = {
         "where": WHERE_CLAUSE, # The Where parameter is user defined above
         "outFields": "*", # This will select all columns
@@ -42,7 +42,7 @@ params = {
 response = requests.get(BASE_URL, params=params)
 
 # .raise_for_status() will return an HTTPerror if there was an error during the process
-response.raise_for_status() 
+response.raise_for_status()
 
 # To parse the JSON string into a Python Dictionary
 data = response.json()
