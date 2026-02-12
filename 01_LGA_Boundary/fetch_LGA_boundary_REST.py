@@ -1,9 +1,8 @@
-# This script is for getting a .geoJSON of an LGA boundary from the Spatial Services Spatial collaboration Portal API
+# This script is for getting a .geoJSON of an LGA boundary from the Spatial Services Spatial Collaboration Portal API
 # NSW Administrative Boundaries Theme - Local Government Area
 
-import requests # third party library that must be installed
 import json # built-in library
-
+import requests # third party library that must be installed
 
 
 
@@ -30,9 +29,9 @@ print(f"Filter: {WHERE_CLAUSE}")
 
 # Define the parameters 
 params = {
-        "where": WHERE_CLAUSE, # The Where parameter is user defined above
+        "where": WHERE_CLAUSE, # The where parameter is user defined above
         "outFields": "*", # This will select all columns
-        "f": "geojson", # This give the file format
+        "f": "geojson", # This give the file format of output
     }
 
 # Use Python requests.get() to retrieve information from the server, 
