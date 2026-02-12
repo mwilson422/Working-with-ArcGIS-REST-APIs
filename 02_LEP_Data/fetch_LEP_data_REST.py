@@ -1,6 +1,11 @@
-import requests
+# This script will fetch data from an ArcGIS REST API by filtering by a column that can be set by user
+# SEED Environmental Planning Instrument - Land Zoning
+
 import json
 import time
+import requests
+
+
 
 def fetch_arcgis_features(base_url, where_clause, max_retries=3):
     """
@@ -15,8 +20,7 @@ def fetch_arcgis_features(base_url, where_clause, max_retries=3):
         GeoJSON FeatureCollection with all features
     """
     
-    all_features = []
-    offset = 0
+    all_features = [] # empty list
     page_size = 1000  # Common max for ArcGIS servers
     
     print(f"Fetching data from: {base_url}")
@@ -26,6 +30,7 @@ def fetch_arcgis_features(base_url, where_clause, max_retries=3):
     # First, check if server supports pagination
     supports_pagination = check_pagination_support(base_url)
     
+    # Next, fetch features
     if supports_pagination:
         print("✓ Server supports pagination")
         all_features = fetch_with_pagination(base_url, where_clause, page_size, max_retries)
@@ -45,8 +50,9 @@ def fetch_arcgis_features(base_url, where_clause, max_retries=3):
     return geojson
 
 
+
 def check_pagination_support(base_url):
-    """Check if the ArcGIS server supports pagination."""
+    # Check if the ArcGIS server supports pagination
     try:
         # Remove /query if it's in the URL
         service_url = base_url.replace('/query', '')
@@ -64,8 +70,9 @@ def check_pagination_support(base_url):
         return False
 
 
+
 def fetch_with_pagination(base_url, where_clause, page_size, max_retries):
-    """Fetch features using pagination (resultOffset/resultRecordCount)."""
+    # Fetch features using pagination (resultOffset/resultRecordCount)
     all_features = []
     offset = 0
     
@@ -116,8 +123,9 @@ def fetch_with_pagination(base_url, where_clause, page_size, max_retries):
     return all_features
 
 
+
 def fetch_single_request(base_url, where_clause, max_retries):
-    """Fetch features in a single request (fallback method)."""
+    # Fetch features in a single request (fallback method)
     params = {
         'where': where_clause,
         'outFields': '*',
@@ -149,11 +157,13 @@ def fetch_single_request(base_url, where_clause, max_retries):
                 raise Exception(f"Failed to fetch data: {str(e)}")
 
 
+
 def save_geojson(geojson_data, filename):
-    """Save GeoJSON to file."""
+    # Save GeoJSON to file
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(geojson_data, f, indent=2, ensure_ascii=False)
     print(f"✓ Saved to: {filename}")
+
 
 
 # Main execution
